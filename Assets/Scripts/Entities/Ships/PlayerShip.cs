@@ -12,6 +12,7 @@ namespace TAOM.Entities.Ships {
 
 		private InputManager inputManager;
 		private Game game;
+		private OverheatingSystem overheatingSystem;
 		private Vector3 movement;
 		private Vector3 rotation;
 
@@ -19,6 +20,7 @@ namespace TAOM.Entities.Ships {
 			base.Awake();
 			inputManager = FindObjectOfType<InputManager>();
 			game = FindObjectOfType<Game>();
+			overheatingSystem = GetComponent<OverheatingSystem>();
 		}
 
 		private void Update() {
@@ -62,7 +64,8 @@ namespace TAOM.Entities.Ships {
 		#region ACTIONS
 
 		private void CheckIsFiring() {
-			if (inputManager.InputFire() && Fire()) {
+			if (inputManager.InputFire() && overheatingSystem.IsInOrder() && Fire()) {
+				overheatingSystem.Heat();
 				Camera.main.DOShakePosition(SHAKE_DURATION, SHAKE_POWER);
 				inputManager.VibrateController(0.2f, 0.2f, 0.2f);
 			}

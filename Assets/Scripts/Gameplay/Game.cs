@@ -42,11 +42,13 @@ namespace TAOM.Gameplay {
 		#region ENEMY WAVES
 
 		private void StartEnemyWave() {
+			Debug.Log("WAVE STARTED");
 			gameState = GameState.WAVE_IN_PROGRESS;
 			StartCoroutine(shipFactory.StartEnemyWave(currentWave, () => OnWaveComplete()));
 		}
 
 		public void OnWaveComplete() {
+			Debug.Log("WAVE DONE");
 			++currentWave;
 			gameState = GameState.WAVE_DONE;
 		}
@@ -57,6 +59,7 @@ namespace TAOM.Gameplay {
 		}
 
 		private IEnumerator StartPause() {
+			Debug.Log("START PAUSE");
 			gameState = GameState.PAUSED;
 			yield return new WaitForSeconds(delayBetweenWaves);
 			StartEnemyWave();

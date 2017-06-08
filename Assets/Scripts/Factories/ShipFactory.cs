@@ -35,6 +35,8 @@ namespace TAOM.Factories {
 				SpawnEnemyShip();
 				yield return new WaitForSeconds(UnityEngine.Random.Range(delayMinBetweenEnemySpawn, delayMaxBetweenEnemySpawn));
 			}
+
+			onWaveComplete();
 		}
 
 		private void SpawnEnemyShip() {
