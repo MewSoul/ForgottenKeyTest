@@ -13,8 +13,12 @@ namespace TAOM.Entities.Ships {
 		private Transform projectileParent;
 		private float nextTimeShoot;
 
-		private void Start() {
+		protected override void Awake() {
+			base.Awake();
 			projectileParent = GameObject.FindGameObjectWithTag("_Projectiles").transform;
+		}
+
+		protected virtual void Start() {
 			nextTimeShoot = Time.time;
 		}
 

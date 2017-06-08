@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using TAOM.Gameplay;
 using TAOM.Managers;
 using UnityEngine;
 
@@ -9,14 +10,15 @@ namespace TAOM.Entities.Ships {
 		private const float SHAKE_DURATION = 0.1f;
 		private const float SHAKE_POWER = 0.5f;
 
-		private Rigidbody rb;
 		private InputManager inputManager;
+		private Game game;
 		private Vector3 movement;
 		private Vector3 rotation;
 
-		private void Awake() {
-			rb = GetComponent<Rigidbody>();
+		protected override void Awake() {
+			base.Awake();
 			inputManager = FindObjectOfType<InputManager>();
+			game = FindObjectOfType<Game>();
 		}
 
 		private void Update() {
@@ -69,17 +71,14 @@ namespace TAOM.Entities.Ships {
 
 		#endregion
 
-		#region OVERRIDES
-
 		public override void Damage(float damagePoint) {
 			base.Damage(damagePoint);
 		}
 
 		protected override void Die() {
 			base.Die();
+			game.GameOver();
 		}
-
-		#endregion
 
 	}
 

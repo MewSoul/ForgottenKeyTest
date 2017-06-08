@@ -7,6 +7,12 @@ namespace TAOM.Entities {
 		[SerializeField] private float lifePoints;
 		[SerializeField] protected float movementSpeed;
 
+		protected Rigidbody rb;
+
+		protected virtual void Awake() {
+			rb = GetComponent<Rigidbody>();
+		}
+
 		public virtual void Damage(float damagePoint) {
 			lifePoints -= damagePoint;
 
