@@ -20,12 +20,14 @@ namespace TAOM.Gameplay {
 
 		private ShipFactory shipFactory;
 		private AsteroidFactory asteroidFactory;
+		private Score score;
 		private GameState gameState;
 		private int currentWave;
 
 		private void Awake() {
 			shipFactory = FindObjectOfType<ShipFactory>();
 			asteroidFactory = FindObjectOfType<AsteroidFactory>();
+			score = FindObjectOfType<Score>();
 			gameState = GameState.PAUSED;
 			currentWave = 0;
 		}
@@ -60,12 +62,14 @@ namespace TAOM.Gameplay {
 
 		private IEnumerator StartPause() {
 			Debug.Log("START PAUSE");
+			score.WaveCompleted();
 			gameState = GameState.PAUSED;
 			yield return new WaitForSeconds(delayBetweenWaves);
 			StartEnemyWave();
 		}
 
 		public void NotifyEnemyDeath(EnemyShip destroyedEnemy) {
+			score.EnemyKilled();
 			shipFactory.RemoveDestroyedEnemy(destroyedEnemy);
 			CheckPauseBeforeNextWave();
 		}
@@ -79,6 +83,10 @@ namespace TAOM.Gameplay {
 		}
 
 		#endregion
+
+		public void NotifyPlayerDamaged() {
+			score.ResetCombo();
+		}
 
 		public void GameOver() {
 			gameState = GameState.GAME_OVER;

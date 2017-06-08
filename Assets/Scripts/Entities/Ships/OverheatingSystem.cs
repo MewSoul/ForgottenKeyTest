@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace TAOM.Entities.Ships {
@@ -51,7 +52,7 @@ namespace TAOM.Entities.Ships {
 		}
 
 		private void UpdateSlider() {
-			heatSlider.value = currentHeat;
+			heatSlider.DOValue(currentHeat, 0.2f);
 		}
 
 	}

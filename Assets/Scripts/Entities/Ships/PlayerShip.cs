@@ -76,6 +76,7 @@ namespace TAOM.Entities.Ships {
 
 		public override void Damage(float damagePoint) {
 			base.Damage(damagePoint);
+			game.NotifyPlayerDamaged();
 		}
 
 		protected override void Die() {
