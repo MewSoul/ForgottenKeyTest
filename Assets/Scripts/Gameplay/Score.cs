@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace TAOM.Gameplay {
@@ -10,22 +11,24 @@ namespace TAOM.Gameplay {
 		[SerializeField] private int valueEnemyKilled;
 		[SerializeField] private int valueWaveCompleted;
 
-		private int currentScore;
+		private dreamloLeaderBoard leaderBoard;
+		public int CurrentScore { get; private set; }
 		private int currentCombo;
 
 		private void Awake() {
-			currentScore = 0;
+			leaderBoard = dreamloLeaderBoard.GetSceneDreamloLeaderboard();
+			CurrentScore = 0;
 			currentCombo = 1;
 		}
 
 		public void EnemyKilled() {
-			currentScore += valueEnemyKilled * currentCombo;
+			CurrentScore += valueEnemyKilled * currentCombo;
 			UpdateScoreText();
 			IncreaseCombo();
 		}
 
 		public void WaveCompleted() {
-			currentScore += valueWaveCompleted;
+			CurrentScore += valueWaveCompleted;
 			UpdateScoreText();
 		}
 
@@ -39,11 +42,19 @@ namespace TAOM.Gameplay {
 		}
 
 		private void UpdateScoreText() {
-			scoreText.text = currentScore.ToString();
+			scoreText.text = CurrentScore.ToString();
 		}
 
 		private void UpdateComboText() {
 			comboText.text = "x" + currentCombo;
+		}
+
+		public void SubmitScore(string playerName) {
+			leaderBoard.AddScore(playerName, CurrentScore);
+		}
+
+		public List<dreamloLeaderBoard.Score> RetrieveLeaderBoard() {
+			return leaderBoard.ToListHighToLow();
 		}
 
 	}

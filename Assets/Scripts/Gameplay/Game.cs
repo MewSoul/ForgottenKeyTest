@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using TAOM.Entities.Ships;
 using TAOM.Factories;
+using TAOM.UI;
 using UnityEngine;
 
 namespace TAOM.Gameplay {
@@ -21,6 +22,7 @@ namespace TAOM.Gameplay {
 		private ShipFactory shipFactory;
 		private AsteroidFactory asteroidFactory;
 		private Score score;
+		private GameOverController gameOverController;
 		private GameState gameState;
 		private int currentWave;
 
@@ -28,6 +30,7 @@ namespace TAOM.Gameplay {
 			shipFactory = FindObjectOfType<ShipFactory>();
 			asteroidFactory = FindObjectOfType<AsteroidFactory>();
 			score = FindObjectOfType<Score>();
+			gameOverController = FindObjectOfType<GameOverController>();
 			gameState = GameState.PAUSED;
 			currentWave = 0;
 		}
@@ -91,6 +94,7 @@ namespace TAOM.Gameplay {
 		public void GameOver() {
 			gameState = GameState.GAME_OVER;
 			StopAllCoroutines();
+			gameOverController.DisplayGameOverWindow();
 		}
 
 	}
