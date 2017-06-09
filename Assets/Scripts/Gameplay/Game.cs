@@ -40,7 +40,7 @@ namespace TAOM.Gameplay {
 		}
 
 		private void StartGame() {
-			StartEnemyWave();
+			//	StartEnemyWave();
 			StartAsteroidFlow();
 		}
 

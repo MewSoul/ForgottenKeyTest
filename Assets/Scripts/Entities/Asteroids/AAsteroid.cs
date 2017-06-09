@@ -7,7 +7,7 @@ namespace TAOM.Entities.Asteroids {
 		[SerializeField] private float rotationSpeed;
 
 		protected override void Awake() {
-			rb = GetComponent<Rigidbody>();
+			base.Awake();
 			rb.angularVelocity = Random.insideUnitSphere * rotationSpeed;
 		}
 

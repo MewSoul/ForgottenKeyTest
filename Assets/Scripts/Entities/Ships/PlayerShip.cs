@@ -15,12 +15,14 @@ namespace TAOM.Entities.Ships {
 		private OverheatingSystem overheatingSystem;
 		private Vector3 movement;
 		private Vector3 rotation;
+		private int currentNbCollectible;
 
 		protected override void Awake() {
 			base.Awake();
 			inputManager = FindObjectOfType<InputManager>();
 			game = FindObjectOfType<Game>();
-			overheatingSystem = GetComponent<OverheatingSystem>();
+			overheatingSystem = GetComponentInChildren<OverheatingSystem>();
+			currentNbCollectible = 0;
 		}
 
 		private void Update() {
@@ -70,6 +72,14 @@ namespace TAOM.Entities.Ships {
 				inputManager.VibrateController(0.2f, 0.2f, 0.2f);
 			}
 
+		}
+
+		#endregion
+
+		#region COLLECTIBLES
+
+		public void IncreaseNbCollectible() {
+			++currentNbCollectible;
 		}
 
 		#endregion

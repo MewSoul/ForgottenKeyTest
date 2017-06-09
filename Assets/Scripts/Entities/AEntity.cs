@@ -6,6 +6,8 @@ namespace TAOM.Entities {
 
 		[SerializeField] private float lifePoints;
 		[SerializeField] protected float movementSpeed;
+		[SerializeField] private int dropRateCollectible;
+		[SerializeField] private GameObject collectiblePrefab;
 
 		protected Rigidbody rb;
 
@@ -21,7 +23,15 @@ namespace TAOM.Entities {
 		}
 
 		protected virtual void Die() {
+			DropCollectible();
 			Destroy(this.gameObject);
+		}
+
+		private void DropCollectible() {
+			if (Random.Range(0, 100) < dropRateCollectible) {
+				Transform collectibleParent = GameObject.FindGameObjectWithTag("_Collectibles").transform;
+				Instantiate(collectiblePrefab, this.transform.position, Quaternion.identity, collectibleParent);
+			}
 		}
 
 	}

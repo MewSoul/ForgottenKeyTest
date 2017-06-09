@@ -20,23 +20,23 @@ namespace TAOM.Entities.Asteroids {
 
 		private void OnTriggerEnter(Collider other) {
 			if (other.transform.parent.CompareTag("Player") || other.transform.parent.CompareTag("HomeAsteroid")) {
-				Explode();
+				Die();
 			} else if (other.CompareTag("Wall")) {
 				StartCoroutine(CheckDestroy());
 			}
 
 		}
 
-		private void Explode() {
+		protected override void Die() {
 			//TODO Spawn explosion + damage
-			Die();
+			base.Die();
 		}
 
 		private IEnumerator CheckDestroy() {
 			//Trick to check if asteroid is outside of the map area as it spawns outside
 			yield return new WaitForSeconds(2f);
 			if (!map.IsPositionInsideMapArea(this.transform.position))
-				Die();
+				Destroy(this.gameObject);
 		}
 
 	}
