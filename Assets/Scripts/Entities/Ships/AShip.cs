@@ -28,7 +28,7 @@ namespace TAOM.Entities.Ships {
 		}
 
 		protected bool Fire() {
-			if (Time.time > nextTimeShoot && !game.GameState.Equals(GameState.PERK)) {
+			if (Time.time > nextTimeShoot && game.CanDoActions()) {
 				nextTimeShoot = Time.time + shootDelay;
 
 				Projectile instance = Instantiate(projectilePrefab, projectileSpawn.position, Quaternion.identity, projectileParent);

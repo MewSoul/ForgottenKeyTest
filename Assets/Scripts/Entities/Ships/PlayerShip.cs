@@ -47,14 +47,15 @@ namespace TAOM.Entities.Ships {
 		#region MOVEMENTS
 
 		private void Move() {
-			rb.velocity = movement * movementSpeed;
+			if (game.CanDoActions())
+				rb.velocity = movement * movementSpeed;
 		}
 
 		private void Rotate() {
 			if (rotation == Vector3.zero)
 				return;
 
-			switch (InputManager.InputType) {
+			switch (inputManager.InputType) {
 				case InputType.CONTROLLER:
 					if (rotation != Vector3.zero)
 						transform.DORotate(Quaternion.LookRotation(rotation).eulerAngles, 0.2f);

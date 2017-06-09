@@ -111,6 +111,10 @@ namespace TAOM.Gameplay {
 
 		#endregion
 
+		public bool CanDoActions() {
+			return !GameState.Equals(GameState.PERK) && !GameState.Equals(GameState.GAME_OVER);
+		}
+
 		public void NotifyPlayerDamaged() {
 			score.ResetCombo();
 		}

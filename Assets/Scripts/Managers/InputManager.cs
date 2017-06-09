@@ -3,13 +3,45 @@ using UnityEngine;
 
 namespace TAOM.Managers {
 
+	public enum Direction {
+		LEFT = -1,
+		NONE = 0,
+		RIGHT = 1
+	}
+
 	public class InputManager : MonoBehaviour {
 
-		public static InputType InputType { get; private set; }
+		public InputType InputType { get; private set; }
 
-		private static Vector3 mousePositionToWorld;
+		private Vector3 mousePositionToWorld;
+
+		private Direction previousInput;
+		private Direction currentInput;
 
 		#region MOVEMENTS
+
+		public Direction InputDirection() {
+			Direction directionToReturn = Direction.NONE;
+			float h = Input.GetAxis("Horizontal");
+
+			if (h > 0.5f)
+				currentInput = Direction.RIGHT;
+			else if (h < -0.5f)
+				currentInput = Direction.LEFT;
+			else
+				currentInput = Direction.NONE;
+
+			//Force to release input otherwise it will cycle too much
+			if (previousInput.Equals(Direction.NONE))
+				directionToReturn = currentInput;
+
+			previousInput = currentInput;
+			return directionToReturn;
+		}
+
+		public bool InputConfirm() {
+			return Input.GetAxis("Submit") >= 1;
+		}
 
 		public Vector3 InputMovement() {
 			float h = Input.GetAxis("Horizontal");
