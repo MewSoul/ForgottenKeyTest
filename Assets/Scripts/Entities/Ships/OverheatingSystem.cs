@@ -36,6 +36,8 @@ namespace TAOM.Entities.Ships {
 			UpdateSlider();
 		}
 
+		#region SYSTEM MANAGEMENT
+
 		public bool IsInOrder() {
 			return currentState.Equals(HeatState.IN_ORDER);
 		}
@@ -54,6 +56,24 @@ namespace TAOM.Entities.Ships {
 		private void UpdateSlider() {
 			heatSlider.DOValue(currentHeat, 0.2f);
 		}
+
+		#endregion
+
+		#region PERKS
+
+		public void IncreaseMaxHeatResistance() {
+			//Increase max heat resistance by 25%
+			maxHeatResistance *= 1.25f;
+			Debug.Log("Increase max heat resistance");
+		}
+
+		public void DecreaseDelayCooldown() {
+			//Decrease delay cooldown by 25%
+			cooldownDelay *= 0.75f;
+			Debug.Log("Decrease delay cooldown");
+		}
+
+		#endregion
 
 	}
 

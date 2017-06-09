@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using TAOM.Gameplay;
 using TAOM.Managers;
 using UnityEngine;
 
@@ -11,7 +10,6 @@ namespace TAOM.Entities.Ships {
 		private const float SHAKE_POWER = 0.5f;
 
 		private InputManager inputManager;
-		private Game game;
 		private OverheatingSystem overheatingSystem;
 		private Vector3 movement;
 		private Vector3 rotation;
@@ -20,7 +18,6 @@ namespace TAOM.Entities.Ships {
 		protected override void Awake() {
 			base.Awake();
 			inputManager = FindObjectOfType<InputManager>();
-			game = FindObjectOfType<Game>();
 			overheatingSystem = GetComponentInChildren<OverheatingSystem>();
 			currentNbCollectible = 0;
 		}
@@ -35,6 +32,16 @@ namespace TAOM.Entities.Ships {
 		private void FixedUpdate() {
 			Move();
 			Rotate();
+		}
+
+		public override void Damage(float damagePoint) {
+			base.Damage(damagePoint);
+			game.NotifyPlayerDamaged();
+		}
+
+		protected override void Die() {
+			base.Die();
+			game.GameOver();
 		}
 
 		#region MOVEMENTS
@@ -84,15 +91,37 @@ namespace TAOM.Entities.Ships {
 
 		#endregion
 
-		public override void Damage(float damagePoint) {
-			base.Damage(damagePoint);
-			game.NotifyPlayerDamaged();
+		#region PERKS
+
+		public void IncreaseFiringRate() {
+			//Increase firing rate  by 25%
+			shootDelay *= 0.75f;
+			Debug.Log("Increase firing rate!");
 		}
 
-		protected override void Die() {
-			base.Die();
-			game.GameOver();
+		public void IncreaseProjectileDamage() {
+			//Increase damage by 25%
+			projectileDamage *= 1.25f;
+			projectileScale *= 1.25f;
+			Debug.Log("Increase projectile damage!");
 		}
+
+		public void IncreaseMovementSpeed() {
+			//Increase speed by 10%
+			movementSpeed *= 1.1f;
+			Debug.Log("Increase movement speed!");
+		}
+
+		public bool PurchasePerk(int cost) {
+			if (cost > currentNbCollectible)
+				return false;
+
+			currentNbCollectible -= cost;
+
+			return true;
+		}
+
+		#endregion
 
 	}
 

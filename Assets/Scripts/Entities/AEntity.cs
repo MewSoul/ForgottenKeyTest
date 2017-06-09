@@ -4,15 +4,17 @@ namespace TAOM.Entities {
 
 	public abstract class AEntity : MonoBehaviour {
 
-		[SerializeField] private float lifePoints;
+		[SerializeField] protected float lifePoints;
 		[SerializeField] protected float movementSpeed;
 		[SerializeField] private int dropRateCollectible;
 		[SerializeField] private GameObject collectiblePrefab;
 
 		protected Rigidbody rb;
+		protected float maxLifePoints;
 
 		protected virtual void Awake() {
 			rb = GetComponent<Rigidbody>();
+			maxLifePoints = lifePoints;
 		}
 
 		public virtual void Damage(float damagePoint) {

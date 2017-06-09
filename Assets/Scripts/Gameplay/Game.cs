@@ -6,9 +6,10 @@ using UnityEngine;
 
 namespace TAOM.Gameplay {
 
-	enum GameState {
+	public enum GameState {
 		WAVE_IN_PROGRESS,
 		WAVE_DONE,
+		PERK,
 		PAUSED,
 		GAME_OVER
 	}
@@ -18,20 +19,24 @@ namespace TAOM.Gameplay {
 		[SerializeField] private float delayMinBetweenAsteroidSpawn;
 		[SerializeField] private float delayMaxBetweenAsteroidSpawn;
 		[SerializeField] private float delayBetweenWaves;
+		[SerializeField] private float delayBetweenPerkWindow;
 
 		private ShipFactory shipFactory;
 		private AsteroidFactory asteroidFactory;
 		private Score score;
+		private PerkManager perkManager;
 		private GameOverController gameOverController;
-		private GameState gameState;
+		public GameState GameState { get; private set; }
 		private int currentWave;
+		private Coroutine asteroidCoroutine;
 
 		private void Awake() {
 			shipFactory = FindObjectOfType<ShipFactory>();
 			asteroidFactory = FindObjectOfType<AsteroidFactory>();
 			score = FindObjectOfType<Score>();
+			perkManager = FindObjectOfType<PerkManager>();
 			gameOverController = FindObjectOfType<GameOverController>();
-			gameState = GameState.PAUSED;
+			GameState = GameState.PAUSED;
 			currentWave = 0;
 		}
 
@@ -40,7 +45,7 @@ namespace TAOM.Gameplay {
 		}
 
 		private void StartGame() {
-			//	StartEnemyWave();
+			StartEnemyWave();
 			StartAsteroidFlow();
 		}
 
@@ -48,27 +53,22 @@ namespace TAOM.Gameplay {
 
 		private void StartEnemyWave() {
 			Debug.Log("WAVE STARTED");
-			gameState = GameState.WAVE_IN_PROGRESS;
+			GameState = GameState.WAVE_IN_PROGRESS;
 			StartCoroutine(shipFactory.StartEnemyWave(currentWave, () => OnWaveComplete()));
 		}
 
 		public void OnWaveComplete() {
 			Debug.Log("WAVE DONE");
 			++currentWave;
-			gameState = GameState.WAVE_DONE;
+			GameState = GameState.WAVE_DONE;
 		}
 
 		private void CheckPauseBeforeNextWave() {
-			if (gameState.Equals(GameState.WAVE_DONE) && shipFactory.SpawnedEnemies.Count == 0)
-				StartCoroutine(StartPause());
-		}
-
-		private IEnumerator StartPause() {
-			Debug.Log("START PAUSE");
-			score.WaveCompleted();
-			gameState = GameState.PAUSED;
-			yield return new WaitForSeconds(delayBetweenWaves);
-			StartEnemyWave();
+			Debug.Log("CHECK WAVE, STATE=" + GameState + " COUNT=" + shipFactory.SpawnedEnemies.Count);
+			if (GameState.Equals(GameState.WAVE_DONE) && shipFactory.SpawnedEnemies.Count == 0) {
+				StopAsteroidFlow();
+				StartCoroutine(DisplayPerkWindow());
+			}
 		}
 
 		public void NotifyEnemyDeath(EnemyShip destroyedEnemy) {
@@ -79,10 +79,34 @@ namespace TAOM.Gameplay {
 
 		#endregion
 
+		#region BREAKS
+
+		private IEnumerator DisplayPerkWindow() {
+			Debug.Log("DISPLAY PERK WINDOW");
+			GameState = GameState.PERK;
+			score.WaveCompleted();
+			yield return new WaitForSeconds(delayBetweenPerkWindow);
+			perkManager.DisplayWindow();
+		}
+
+		public IEnumerator StartPause() {
+			Debug.Log("START PAUSE");
+			GameState = GameState.PAUSED;
+			yield return new WaitForSeconds(delayBetweenWaves);
+			StartEnemyWave();
+			StartAsteroidFlow();
+		}
+
+		#endregion
+
 		#region ASTEROIDS
 
 		private void StartAsteroidFlow() {
-			StartCoroutine(asteroidFactory.StartAsteroidWave());
+			asteroidCoroutine = StartCoroutine(asteroidFactory.StartAsteroidWave());
+		}
+
+		private void StopAsteroidFlow() {
+			StopCoroutine(asteroidCoroutine);
 		}
 
 		#endregion
@@ -92,7 +116,7 @@ namespace TAOM.Gameplay {
 		}
 
 		public void GameOver() {
-			gameState = GameState.GAME_OVER;
+			GameState = GameState.GAME_OVER;
 			StopAllCoroutines();
 			gameOverController.DisplayGameOverWindow();
 		}

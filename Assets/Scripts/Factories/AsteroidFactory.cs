@@ -26,6 +26,12 @@ namespace TAOM.Factories {
 			}
 		}
 
+		public void DecreaseDelayMaxAsteroidSpawn() {
+			//Decrease by 25% the delay max between each asteroid spawn
+			delayMaxBetweenAsteroidSpawn *= 0.75f;
+			Debug.Log("Decrease delay max asteroid spawn");
+		}
+
 	}
 
 }

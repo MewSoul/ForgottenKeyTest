@@ -1,5 +1,4 @@
-﻿using TAOM.Gameplay;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TAOM.Entities.Ships {
 
@@ -7,13 +6,7 @@ namespace TAOM.Entities.Ships {
 
 		[SerializeField] private float delayBetweenShots;
 
-		private Game game;
 		private float timeNextShot;
-
-		protected override void Awake() {
-			base.Awake();
-			game = FindObjectOfType<Game>();
-		}
 
 		protected override void Start() {
 			base.Start();
