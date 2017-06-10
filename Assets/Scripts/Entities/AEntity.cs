@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TAOM.Managers;
 using UnityEngine;
 
 namespace TAOM.Entities {
@@ -10,13 +11,17 @@ namespace TAOM.Entities {
 		[SerializeField] private int dropRateCollectible;
 		[SerializeField] private GameObject collectiblePrefab;
 		[SerializeField] private GameObject explosionPrefab;
+		[SerializeField] private AudioClip explosionClip;
+		[SerializeField] protected float volumeSource;
 
+		protected AudioManager audioManager;
 		private Renderer meshRenderer;
 		protected Rigidbody rb;
 		protected float maxLifePoints;
 		private Transform explosionParent;
 
 		protected virtual void Awake() {
+			audioManager = FindObjectOfType<AudioManager>();
 			meshRenderer = GetComponentInChildren<Renderer>();
 			rb = GetComponent<Rigidbody>();
 			maxLifePoints = lifePoints;
@@ -36,6 +41,9 @@ namespace TAOM.Entities {
 			DropCollectible();
 			if (explosionPrefab != null)
 				Instantiate(explosionPrefab, this.transform.position, Quaternion.identity, explosionParent);
+
+			audioManager.PlayClip(explosionClip, volumeSource);
+
 			Destroy(this.gameObject);
 		}
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using TAOM.Entities.Ships;
+using TAOM.Managers;
 using UnityEngine;
 
 namespace TAOM.Gameplay {
@@ -10,13 +11,18 @@ namespace TAOM.Gameplay {
 
 		[SerializeField] private float rotationSpeed;
 		[SerializeField] private float lifeTime;
+		[SerializeField] private AudioClip pickupClip;
+		[SerializeField] private float volumeSource;
+		[SerializeField] private float pitchSource;
 
+		private AudioManager audioManager;
 		private Rigidbody rb;
 		private float currentLifeTime;
 		private Coroutine flashCoroutine;
 		private Behaviour halo;
 
 		private void Awake() {
+			audioManager = FindObjectOfType<AudioManager>();
 			rb = GetComponent<Rigidbody>();
 			rb.angularVelocity = Random.insideUnitSphere * rotationSpeed;
 			flashCoroutine = null;
@@ -49,6 +55,7 @@ namespace TAOM.Gameplay {
 		private void OnTriggerEnter(Collider other) {
 			if (other.transform.parent.CompareTag("Player")) {
 				other.gameObject.GetComponentInParent<PlayerShip>().IncreaseNbCollectible();
+				audioManager.PlayClip(pickupClip, volumeSource, pitchSource);
 				Destroy(this.gameObject);
 			}
 		}
