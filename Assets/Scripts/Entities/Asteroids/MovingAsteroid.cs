@@ -27,11 +27,6 @@ namespace TAOM.Entities.Asteroids {
 
 		}
 
-		protected override void Die() {
-			//TODO Spawn explosion + damage
-			base.Die();
-		}
-
 		private IEnumerator CheckDestroy() {
 			//Trick to check if asteroid is outside of the map area as it spawns outside
 			yield return new WaitForSeconds(2f);

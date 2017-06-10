@@ -44,7 +44,7 @@ namespace TAOM.Entities.Ships {
 				Vector3.Distance(this.transform.position, homeAsteroid.transform.position) < shootDistanceHomeAsteroid);
 		}
 
-		protected override void Die() {
+		public override void Die() {
 			base.Die();
 			game.NotifyEnemyDeath(this);
 		}

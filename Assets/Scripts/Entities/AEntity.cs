@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace TAOM.Entities {
 
@@ -9,10 +10,12 @@ namespace TAOM.Entities {
 		[SerializeField] private int dropRateCollectible;
 		[SerializeField] private GameObject collectiblePrefab;
 
+		private Renderer meshRenderer;
 		protected Rigidbody rb;
 		protected float maxLifePoints;
 
 		protected virtual void Awake() {
+			meshRenderer = GetComponentInChildren<Renderer>();
 			rb = GetComponent<Rigidbody>();
 			maxLifePoints = lifePoints;
 		}
@@ -22,11 +25,21 @@ namespace TAOM.Entities {
 
 			if (lifePoints <= 0)
 				Die();
+			else
+				StartCoroutine(FlashModel());
 		}
 
-		protected virtual void Die() {
+		public virtual void Die() {
 			DropCollectible();
 			Destroy(this.gameObject);
+		}
+
+		private IEnumerator FlashModel() {
+			foreach (Material material in meshRenderer.materials)
+				material.color = Color.red;
+			yield return new WaitForSeconds(.1f);
+			foreach (Material material in meshRenderer.materials)
+				material.color = Color.white;
 		}
 
 		private void DropCollectible() {

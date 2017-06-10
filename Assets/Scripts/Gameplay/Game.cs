@@ -23,9 +23,11 @@ namespace TAOM.Gameplay {
 
 		private ShipFactory shipFactory;
 		private AsteroidFactory asteroidFactory;
+		private CollectibleMagnet collectibleMagnet;
 		private Score score;
 		private PerkManager perkManager;
 		private GameOverController gameOverController;
+
 		public GameState GameState { get; private set; }
 		private int currentWave;
 		private Coroutine asteroidCoroutine;
@@ -36,6 +38,8 @@ namespace TAOM.Gameplay {
 			score = FindObjectOfType<Score>();
 			perkManager = FindObjectOfType<PerkManager>();
 			gameOverController = FindObjectOfType<GameOverController>();
+			collectibleMagnet = FindObjectOfType<CollectibleMagnet>();
+
 			GameState = GameState.PAUSED;
 			currentWave = 0;
 		}
@@ -67,6 +71,8 @@ namespace TAOM.Gameplay {
 			Debug.Log("CHECK WAVE, STATE=" + GameState + " COUNT=" + shipFactory.SpawnedEnemies.Count);
 			if (GameState.Equals(GameState.WAVE_DONE) && shipFactory.SpawnedEnemies.Count == 0) {
 				StopAsteroidFlow();
+				asteroidFactory.ExplodeAllAsteroids();
+				StartCoroutine(collectibleMagnet.BoostMagnet());
 				StartCoroutine(DisplayPerkWindow());
 			}
 		}

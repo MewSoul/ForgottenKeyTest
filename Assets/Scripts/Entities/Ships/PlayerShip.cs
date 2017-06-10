@@ -39,7 +39,7 @@ namespace TAOM.Entities.Ships {
 			game.NotifyPlayerDamaged();
 		}
 
-		protected override void Die() {
+		public override void Die() {
 			base.Die();
 			game.GameOver();
 		}

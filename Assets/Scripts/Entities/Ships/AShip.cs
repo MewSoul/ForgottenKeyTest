@@ -31,7 +31,7 @@ namespace TAOM.Entities.Ships {
 			if (Time.time > nextTimeShoot && game.CanDoActions()) {
 				nextTimeShoot = Time.time + shootDelay;
 
-				Projectile instance = Instantiate(projectilePrefab, projectileSpawn.position, Quaternion.identity, projectileParent);
+				Projectile instance = Instantiate(projectilePrefab, projectileSpawn.position + RandomOffsetProjectile(), Quaternion.identity, projectileParent);
 				instance.transform.localScale = new Vector3(projectileScale, projectileScale, projectileScale);
 				instance.GetComponent<Projectile>().SetData(this.transform.rotation.eulerAngles.y, projectileSpeed, projectileDamage);
 
@@ -41,6 +41,10 @@ namespace TAOM.Entities.Ships {
 
 			}
 			return false;
+		}
+
+		private Vector3 RandomOffsetProjectile() {
+			return new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
 		}
 
 	}

@@ -12,7 +12,7 @@ namespace TAOM.Entities.Asteroids {
 			game = FindObjectOfType<Game>();
 		}
 
-		protected override void Die() {
+		public override void Die() {
 			base.Die();
 			game.GameOver();
 		}

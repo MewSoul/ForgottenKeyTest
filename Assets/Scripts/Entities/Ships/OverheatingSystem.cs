@@ -12,6 +12,8 @@ namespace TAOM.Entities.Ships {
 	public class OverheatingSystem : MonoBehaviour {
 
 		[SerializeField] private Slider heatSlider;
+		[SerializeField] private Image fillSliderImage;
+		[SerializeField] private Gradient heatGradient;
 
 		[SerializeField] private float maxHeatResistance;
 		[SerializeField] private float heatAddedPerShot;
@@ -53,8 +55,13 @@ namespace TAOM.Entities.Ships {
 			return true;
 		}
 
+		#endregion
+
+		#region DISPLAY
+
 		private void UpdateSlider() {
 			heatSlider.DOValue(currentHeat, 0.2f);
+			fillSliderImage.color = heatGradient.Evaluate(currentHeat / maxHeatResistance);
 		}
 
 		#endregion

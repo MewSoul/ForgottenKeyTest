@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TAOM.Entities.Asteroids;
 using TAOM.Gameplay;
 using UnityEngine;
 
@@ -26,11 +27,20 @@ namespace TAOM.Factories {
 			}
 		}
 
+		public void ExplodeAllAsteroids() {
+			foreach (GameObject asteroid in GameObject.FindGameObjectsWithTag("Asteroid"))
+				asteroid.GetComponent<MovingAsteroid>().Die();
+		}
+
+		#region PERKS
+
 		public void DecreaseDelayMaxAsteroidSpawn() {
 			//Decrease by 25% the delay max between each asteroid spawn
 			delayMaxBetweenAsteroidSpawn *= 0.75f;
 			Debug.Log("Decrease delay max asteroid spawn");
 		}
+
+		#endregion
 
 	}
 
