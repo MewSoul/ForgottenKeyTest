@@ -1,10 +1,13 @@
 ﻿using System.Collections;
+using TAOM.Entities.Ships;
 using TAOM.Gameplay;
 using UnityEngine;
 
 namespace TAOM.Entities.Asteroids {
 
 	public class MovingAsteroid : AAsteroid {
+
+		private const int DAMAGE_ON_COLLISION = 1;
 
 		private Map map;
 
@@ -19,7 +22,10 @@ namespace TAOM.Entities.Asteroids {
 		}
 
 		private void OnTriggerEnter(Collider other) {
-			if (other.transform.parent.CompareTag("Player") || other.transform.parent.CompareTag("HomeAsteroid")) {
+			if (other.transform.parent.CompareTag("Player")) {
+				other.GetComponentInParent<PlayerShip>().Damage(DAMAGE_ON_COLLISION);
+				Die();
+			} else if (other.transform.parent.CompareTag("HomeAsteroid")) {
 				Die();
 			} else if (other.CompareTag("Wall")) {
 				StartCoroutine(CheckDestroy());
