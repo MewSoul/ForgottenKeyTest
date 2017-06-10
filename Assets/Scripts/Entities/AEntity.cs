@@ -9,15 +9,18 @@ namespace TAOM.Entities {
 		[SerializeField] protected float movementSpeed;
 		[SerializeField] private int dropRateCollectible;
 		[SerializeField] private GameObject collectiblePrefab;
+		[SerializeField] private GameObject explosionPrefab;
 
 		private Renderer meshRenderer;
 		protected Rigidbody rb;
 		protected float maxLifePoints;
+		private Transform explosionParent;
 
 		protected virtual void Awake() {
 			meshRenderer = GetComponentInChildren<Renderer>();
 			rb = GetComponent<Rigidbody>();
 			maxLifePoints = lifePoints;
+			explosionParent = GameObject.FindGameObjectWithTag("_Explosions").transform;
 		}
 
 		public virtual void Damage(float damagePoint) {
@@ -31,6 +34,8 @@ namespace TAOM.Entities {
 
 		public virtual void Die() {
 			DropCollectible();
+			if (explosionPrefab != null)
+				Instantiate(explosionPrefab, this.transform.position, Quaternion.identity, explosionParent);
 			Destroy(this.gameObject);
 		}
 
