@@ -49,6 +49,8 @@ namespace TAOM.Entities.Ships {
 		private void Move() {
 			if (game.CanDoActions())
 				rb.velocity = movement * movementSpeed;
+			else
+				rb.velocity = Vector3.zero;
 		}
 
 		private void Rotate() {
@@ -76,7 +78,7 @@ namespace TAOM.Entities.Ships {
 		private void CheckIsFiring() {
 			if (inputManager.InputFire() && overheatingSystem.IsInOrder() && Fire()) {
 				overheatingSystem.Heat();
-				Camera.main.DOShakePosition(SHAKE_DURATION, SHAKE_POWER);
+				Camera.main.DOShakePosition(SHAKE_DURATION, SHAKE_POWER * projectileScale);
 				inputManager.VibrateController(0.2f, 0.2f, 0.2f);
 			}
 
@@ -103,7 +105,7 @@ namespace TAOM.Entities.Ships {
 		public void IncreaseProjectileDamage() {
 			//Increase damage by 25%
 			projectileDamage *= 1.25f;
-			projectileScale *= 1.25f;
+			projectileScale *= 1.33f;
 			Debug.Log("Increase projectile damage!");
 		}
 
