@@ -29,9 +29,10 @@ namespace TAOM.Entities.Ships {
 		}
 
 		private void Update() {
-			if (Vector3.Distance(this.transform.position, player.transform.position) < shootDistancePlayer)
+			if (Vector3.Distance(this.transform.position, player.transform.position) < shootDistancePlayer &&
+				player.gameObject != null)
 				this.transform.DOLookAt(player.transform.position, 0.5f);
-			else
+			else if (homeAsteroid.gameObject != null)
 				this.transform.DOLookAt(homeAsteroid.transform.position, 0.5f);
 
 			if (Time.time > timeNextShot && IsCloseToTargetsToShoot() && Fire()) {
@@ -40,12 +41,13 @@ namespace TAOM.Entities.Ships {
 		}
 
 		private bool IsCloseToTargetsToShoot() {
-			return (Vector3.Distance(this.transform.position, player.transform.position) < shootDistancePlayer ||
-				Vector3.Distance(this.transform.position, homeAsteroid.transform.position) < shootDistanceHomeAsteroid);
+			return ((player.gameObject != null && Vector3.Distance(this.transform.position, player.transform.position) < shootDistancePlayer) ||
+				(homeAsteroid.gameObject != null && Vector3.Distance(this.transform.position, homeAsteroid.transform.position) < shootDistanceHomeAsteroid));
 		}
 
 		public override void Die() {
 			base.Die();
+			DOTween.Kill(this.transform);
 			game.NotifyEnemyDeath(this);
 		}
 

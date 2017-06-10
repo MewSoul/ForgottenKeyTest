@@ -21,11 +21,13 @@ namespace TAOM.Factories {
 		private Map map;
 		private Transform enemyShipParent;
 		public List<EnemyShip> SpawnedEnemies { get; private set; }
+		private PlayerShip playerShip;
 
 		private void Awake() {
 			map = FindObjectOfType<Map>();
 			enemyShipParent = GameObject.FindGameObjectWithTag("_Enemies").transform;
 			SpawnedEnemies = new List<EnemyShip>();
+			playerShip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShip>();
 		}
 
 		public IEnumerator StartEnemyWave(int waveNb, Action onWaveComplete) {
@@ -45,6 +47,14 @@ namespace TAOM.Factories {
 
 		public void RemoveDestroyedEnemy(EnemyShip destroyedEnemy) {
 			SpawnedEnemies.Remove(destroyedEnemy);
+		}
+
+		public void DestroyAllShips() {
+			foreach (EnemyShip ship in SpawnedEnemies) {
+				ship.Die();
+			}
+			if (playerShip.gameObject != null)
+				playerShip.Die();
 		}
 
 	}

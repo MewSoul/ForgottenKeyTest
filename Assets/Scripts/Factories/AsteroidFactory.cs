@@ -14,10 +14,12 @@ namespace TAOM.Factories {
 
 		private Map map;
 		private Transform asteroidParent;
+		private HomeAsteroid homeAsteroid;
 
 		private void Awake() {
 			map = FindObjectOfType<Map>();
 			asteroidParent = GameObject.FindGameObjectWithTag("_Asteroids").transform;
+			homeAsteroid = GameObject.FindGameObjectWithTag("HomeAsteroid").GetComponent<HomeAsteroid>();
 		}
 
 		public IEnumerator StartAsteroidWave() {
@@ -27,9 +29,12 @@ namespace TAOM.Factories {
 			}
 		}
 
-		public void ExplodeAllAsteroids() {
+		public void ExplodeAllAsteroids(bool destroyHomeAsteroid = false) {
 			foreach (GameObject asteroid in GameObject.FindGameObjectsWithTag("Asteroid"))
 				asteroid.GetComponent<MovingAsteroid>().Die();
+
+			if (destroyHomeAsteroid)
+				homeAsteroid.Die();
 		}
 
 		#region PERKS

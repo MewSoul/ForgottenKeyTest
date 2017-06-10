@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using TAOM.Entities.Ships;
 using TAOM.Factories;
 using TAOM.UI;
@@ -78,6 +79,9 @@ namespace TAOM.Gameplay {
 		}
 
 		public void NotifyEnemyDeath(EnemyShip destroyedEnemy) {
+			if (GameState.Equals(GameState.GAME_OVER))
+				return;
+
 			score.EnemyKilled();
 			shipFactory.RemoveDestroyedEnemy(destroyedEnemy);
 			CheckPauseBeforeNextWave();
@@ -126,8 +130,23 @@ namespace TAOM.Gameplay {
 		}
 
 		public void GameOver() {
+			if (GameState.Equals(GameState.GAME_OVER))
+				return;
+
+			Debug.Log("GAME OVER");
+
 			GameState = GameState.GAME_OVER;
 			StopAllCoroutines();
+
+			asteroidFactory.ExplodeAllAsteroids(true);
+			shipFactory.DestroyAllShips();
+
+			Camera.main.DOShakePosition(2f, 4f, 5, 360);
+			StartCoroutine(WaitBeforeDisplayGameOver());
+		}
+
+		private IEnumerator WaitBeforeDisplayGameOver() {
+			yield return new WaitForSeconds(2.2f);
 			gameOverController.DisplayGameOverWindow();
 		}
 
