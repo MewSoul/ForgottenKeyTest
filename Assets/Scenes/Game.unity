@@ -4494,6 +4494,8 @@ GameObject:
   - component: {fileID: 2110371201}
   - component: {fileID: 2110371200}
   - component: {fileID: 2110371199}
+  - component: {fileID: 2110371205}
+  - component: {fileID: 2110371204}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4571,3 +4573,50 @@ Transform:
   m_Father: {fileID: 1527813602}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2110371204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2110371198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 51b1e12636b297a4eb14d9c5b8a5da33, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  priority: 0
+--- !u!114 &2110371205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2110371198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948f4100a11a5c24981795d21301da5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volumeTrigger: {fileID: 2110371203}
+  volumeLayer:
+    serializedVersion: 2
+    m_Bits: 7425
+  antialiasingMode: 0
+  temporalAntialiasing:
+    jitterSpread: 0.75
+    sharpen: 0.25
+    stationaryBlending: 0.95
+    motionBlending: 0.85
+  fastApproximateAntialiasing:
+    mobileOptimized: 0
+  debugView:
+    display: 0
+    monitor: 2
+    lightMeter: 1
+  m_Resources: {fileID: 11400000, guid: d82512f9c8e5d4a4d938b575d47f88d4, type: 2}
+  breakBeforeColorGrading: 0
+  m_BeforeTransparentBundles: []
+  m_BeforeStackBundles: []
+  m_AfterStackBundles: []
