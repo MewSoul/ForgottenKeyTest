@@ -16,6 +16,7 @@ TagManager:
   - Asteroid
   - _Explosions
   - _Clips
+  - InGameCanvas
   layers:
   - Default
   - TransparentFX

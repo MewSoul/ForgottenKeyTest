@@ -147,6 +147,7 @@ namespace TAOM.Gameplay {
 
 		private IEnumerator WaitBeforeDisplayGameOver() {
 			yield return new WaitForSeconds(2.2f);
+			GameObject.FindGameObjectWithTag("InGameCanvas").SetActive(false);
 			gameOverController.DisplayGameOverWindow();
 		}
 
