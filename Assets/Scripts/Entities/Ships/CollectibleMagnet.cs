@@ -5,9 +5,9 @@ namespace TAOM.Entities.Ships {
 
 	public class CollectibleMagnet : MonoBehaviour {
 
-		private const float BOOST_RADIUS = 60f;
+		private const float BOOST_RADIUS = 150f;
 		private const float MAGNET_RADIUS = 15f;
-		private const float BOOST_FORCE = 10f;
+		private const float BOOST_FORCE = 15f;
 		private const float PULL_FORCE = 5f;
 
 		private int collectibleLayer;

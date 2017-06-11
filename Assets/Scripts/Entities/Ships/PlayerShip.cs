@@ -128,13 +128,15 @@ namespace TAOM.Entities.Ships {
 		}
 
 		public bool PurchasePerk(int cost) {
-			if (cost > currentNbCollectible)
-				return false;
-
+			Debug.Log("CURRENT NB=" + currentNbCollectible);
+			Debug.Log("COST=" + cost);
 			currentNbCollectible -= cost;
 			currentNbCollectibleText.text = "x" + currentNbCollectible;
-
 			return true;
+		}
+
+		public bool CanPurchasePerk(int cost) {
+			return (cost <= currentNbCollectible);
 		}
 
 		#endregion

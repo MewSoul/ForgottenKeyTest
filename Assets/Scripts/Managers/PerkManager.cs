@@ -56,6 +56,10 @@ namespace TAOM.Gameplay {
 			return false;
 		}
 
+		public bool CanPurchasePerk(Perk perk) {
+			return player.CanPurchasePerk(perk.NextCost());
+		}
+
 		public void DisplayWindow() {
 			perkWindow.ShowWindow();
 		}

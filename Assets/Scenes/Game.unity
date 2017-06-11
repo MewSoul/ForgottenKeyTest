@@ -812,29 +812,19 @@ Prefab:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 244025368}
-    - target: {fileID: 114925444765367698, guid: 4e82885c2d6cc804baaf735ea86b3077,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 244025368}
     - target: {fileID: 114944655187718628, guid: 4e82885c2d6cc804baaf735ea86b3077,
         type: 2}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 244025368}
-    - target: {fileID: 114944655187718628, guid: 4e82885c2d6cc804baaf735ea86b3077,
+    - target: {fileID: 114925444765367698, guid: 4e82885c2d6cc804baaf735ea86b3077,
         type: 2}
-      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: DisableHighlight
-      objectReference: {fileID: 0}
-    - target: {fileID: 114944655187718628, guid: 4e82885c2d6cc804baaf735ea86b3077,
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 244025368}
+    - target: {fileID: 114925444765367698, guid: 4e82885c2d6cc804baaf735ea86b3077,
         type: 2}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114944655187718628, guid: 4e82885c2d6cc804baaf735ea86b3077,
-        type: 2}
-      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2187,6 +2177,16 @@ Prefab:
         type: 2}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: DisableHighlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 114944655187718628, guid: 4e82885c2d6cc804baaf735ea86b3077,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114944655187718628, guid: 4e82885c2d6cc804baaf735ea86b3077,
+        type: 2}
+      propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4e82885c2d6cc804baaf735ea86b3077, type: 2}
@@ -3852,6 +3852,11 @@ Prefab:
         type: 2}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: DisableHighlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 114925444765367698, guid: 4e82885c2d6cc804baaf735ea86b3077,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4e82885c2d6cc804baaf735ea86b3077, type: 2}

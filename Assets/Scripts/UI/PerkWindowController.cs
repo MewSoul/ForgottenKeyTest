@@ -52,7 +52,7 @@ namespace TAOM.UI {
 			chosenPerks = perkManager.PickRandomPerks();
 
 			for (int i = 0; i < 3; i++)
-				slots[i].SetData(chosenPerks[i].title, chosenPerks[i].lore, chosenPerks[i].NextCost());
+				slots[i].SetData(chosenPerks[i].title, chosenPerks[i].lore, chosenPerks[i].NextCost(), perkManager.CanPurchasePerk(chosenPerks[i]));
 
 			window.SetActive(true);
 			audioManager.PlayClip(showWindowClip, volumeSource);
@@ -70,6 +70,8 @@ namespace TAOM.UI {
 
 			if (direction == 0)
 				return;
+
+			DisableHighlight(currentSlotSelected);
 
 			currentSlotSelected += (int) direction;
 
@@ -92,8 +94,6 @@ namespace TAOM.UI {
 		}
 
 		public void HighlightButton(int index) {
-			DisableHighlight(currentSlotSelected);
-
 			//Force save slot in case hover done by mouse
 			currentSlotSelected = index;
 
@@ -120,7 +120,8 @@ namespace TAOM.UI {
 		#region CALLBACKS
 
 		public void OnClickPerkButton(int perkIndex) {
-			if (perkManager.PurchasePerk(chosenPerks[perkIndex])) {
+			if (perkManager.CanPurchasePerk(chosenPerks[perkIndex])) {
+				perkManager.PurchasePerk(chosenPerks[perkIndex]);
 				audioManager.PlayClip(purchaseSuccessClip, volumeSource);
 				HideWindow();
 			} else
