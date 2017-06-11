@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using TAOM.Entities.Ships;
-using TAOM.Managers;
 using TAOM.UI;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace TAOM.Gameplay {
 
@@ -25,73 +22,19 @@ namespace TAOM.Gameplay {
 
 	public class PerkManager : MonoBehaviour {
 
-		[SerializeField] private GameObject window;
-		[SerializeField] private PerkSlot[] slots;
-		[SerializeField] private Button closeButton;
+		[SerializeField] private Perk[] perks;
 
-		public Perk[] perks;
-
-		private List<Perk> chosenPerks;
+		private PerkWindowController perkWindow;
 		private Game game;
-		private InputManager inputManager;
 		private PlayerShip player;
 
-		//Specific for controller support
-		private int currentSlotSelected;
-
 		private void Awake() {
+			perkWindow = FindObjectOfType<PerkWindowController>();
 			game = FindObjectOfType<Game>();
-			inputManager = FindObjectOfType<InputManager>();
 			player = FindObjectOfType<PlayerShip>();
 		}
 
-		private void Update() {
-			if (window.activeSelf) {
-				UpdateSlotSelection();
-				UpdateConfirm();
-			}
-		}
-
-		#region DISPLAY
-
-		private void UpdateSlotSelection() {
-			Direction direction = inputManager.InputDirection();
-			currentSlotSelected += (int) direction;
-
-			//Cycle through slots and close button
-			if (currentSlotSelected > 3)
-				currentSlotSelected = 0;
-			if (currentSlotSelected < 0)
-				currentSlotSelected = 3;
-
-			HighlightButton(currentSlotSelected);
-		}
-
-		private void UpdateConfirm() {
-			if (inputManager.InputConfirm()) {
-				if (currentSlotSelected < 3)
-					OnClickPerkButton(currentSlotSelected);
-				else
-					OnClickCloseButton();
-			}
-		}
-
-		public void DisplayWindow() {
-			currentSlotSelected = 0;
-
-			if (inputManager.InputType.Equals(InputType.CONTROLLER)) {
-				slots[currentSlotSelected].GetComponent<Button>();
-			}
-
-			chosenPerks = PickRandomPerks();
-
-			for (int i = 0; i < 3; i++)
-				slots[i].SetData(chosenPerks[i].title, chosenPerks[i].lore, chosenPerks[i].NextCost());
-
-			window.SetActive(true);
-		}
-
-		private List<Perk> PickRandomPerks() {
+		public List<Perk> PickRandomPerks() {
 			List<Perk> randomPerks = new List<Perk>();
 
 			for (int i = 0; i < 3; i++) {
@@ -104,30 +47,7 @@ namespace TAOM.Gameplay {
 			return randomPerks;
 		}
 
-		private void HighlightButton(int index) {
-			EventSystem.current.SetSelectedGameObject(null);
-			if (index < 3)
-				slots[index].GetComponent<Button>().Select();
-			else
-				closeButton.Select();
-		}
-
-		#endregion
-
-		#region CALLBACKS
-
-		public void OnClickPerkButton(int perkIndex) {
-			if (PurchasePerk(chosenPerks[perkIndex]))
-				StartPause();
-		}
-
-		public void OnClickCloseButton() {
-			StartPause();
-		}
-
-		#endregion
-
-		private bool PurchasePerk(Perk perk) {
+		public bool PurchasePerk(Perk perk) {
 			if (player.PurchasePerk(perk.NextCost())) {
 				perk.currentCost += perk.cost;
 				perk.callback.Invoke();
@@ -136,8 +56,11 @@ namespace TAOM.Gameplay {
 			return false;
 		}
 
-		private void StartPause() {
-			window.SetActive(false);
+		public void DisplayWindow() {
+			perkWindow.ShowWindow();
+		}
+
+		public void StartPause() {
 			StartCoroutine(game.StartPause());
 		}
 

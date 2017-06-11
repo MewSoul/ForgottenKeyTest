@@ -1,13 +1,19 @@
-﻿using UnityEngine;
+﻿using TAOM.Managers;
+using UnityEngine;
 
 namespace TAOM.Entities.Ships {
 
 	public class Projectile : MonoBehaviour {
 
+		[SerializeField] private AudioClip hitClip;
+		[SerializeField] private float volumeSource;
+
+		private AudioManager audioManager;
 		private Rigidbody rb;
 		private float projectileDamage;
 
 		private void Awake() {
+			audioManager = FindObjectOfType<AudioManager>();
 			rb = GetComponent<Rigidbody>();
 		}
 
@@ -19,8 +25,10 @@ namespace TAOM.Entities.Ships {
 
 		private void OnTriggerEnter(Collider other) {
 			AEntity entity = other.gameObject.GetComponentInParent<AEntity>();
-			if (entity != null)
+			if (entity != null) {
 				entity.Damage(projectileDamage);
+				audioManager.PlayClip(hitClip, volumeSource);
+			}
 			Destroy(this.gameObject);
 		}
 

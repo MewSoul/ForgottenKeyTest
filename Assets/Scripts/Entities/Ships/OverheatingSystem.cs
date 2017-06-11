@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using TAOM.Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,11 +20,17 @@ namespace TAOM.Entities.Ships {
 		[SerializeField] private float heatAddedPerShot;
 		[SerializeField] private float cooldownDelay;
 
+		[SerializeField] private AudioClip stateOKClip;
+		[SerializeField] private AudioClip stateKOClip;
+		[SerializeField] private float volumeSource;
+
+		private AudioManager audioManager;
 		private HeatState currentState;
 		private float currentHeat;
 		private float nextTimeStartCooling;
 
 		private void Awake() {
+			audioManager = FindObjectOfType<AudioManager>();
 			currentHeat = 0;
 			currentState = HeatState.IN_ORDER;
 		}
@@ -32,8 +39,10 @@ namespace TAOM.Entities.Ships {
 			if (Time.time > nextTimeStartCooling)
 				--currentHeat;
 
-			if (currentState.Equals(HeatState.OUT_OF_ORDER) && currentHeat == 0)
+			if (currentState.Equals(HeatState.OUT_OF_ORDER) && currentHeat == 0) {
 				currentState = HeatState.IN_ORDER;
+				audioManager.PlayClip(stateOKClip, volumeSource);
+			}
 
 			UpdateSlider();
 		}
@@ -47,8 +56,10 @@ namespace TAOM.Entities.Ships {
 		public bool Heat() {
 			currentHeat = Mathf.Clamp(currentHeat + heatAddedPerShot, 0, maxHeatResistance);
 
-			if (currentHeat == maxHeatResistance)
+			if (currentHeat == maxHeatResistance) {
 				currentState = HeatState.OUT_OF_ORDER;
+				audioManager.PlayClip(stateKOClip, volumeSource);
+			}
 
 			nextTimeStartCooling = Time.time + cooldownDelay;
 

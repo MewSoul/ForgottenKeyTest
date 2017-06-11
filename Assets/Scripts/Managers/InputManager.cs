@@ -17,6 +17,7 @@ namespace TAOM.Managers {
 
 		private Direction previousInput;
 		private Direction currentInput;
+		private bool previousConfirm;
 
 		#region MOVEMENTS
 
@@ -37,10 +38,6 @@ namespace TAOM.Managers {
 
 			previousInput = currentInput;
 			return directionToReturn;
-		}
-
-		public bool InputConfirm() {
-			return Input.GetAxis("Submit") >= 1;
 		}
 
 		public Vector3 InputMovement() {
@@ -83,6 +80,19 @@ namespace TAOM.Managers {
 		public bool InputFire() {
 			return Input.GetAxis("Fire1") >= 1f;
 		}
+
+		public bool InputConfirm() {
+			bool valueToReturn = false;
+			bool currentConfirm = Input.GetAxis("Submit") >= 1;
+
+			//Done so force the player to press and release the input
+			if (previousConfirm == false && currentConfirm)
+				valueToReturn = true;
+
+			previousConfirm = currentConfirm;
+			return valueToReturn;
+		}
+
 
 		#endregion
 

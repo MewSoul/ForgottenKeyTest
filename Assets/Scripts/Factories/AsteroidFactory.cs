@@ -24,8 +24,8 @@ namespace TAOM.Factories {
 
 		public IEnumerator StartAsteroidWave() {
 			while (true) {
-				Instantiate(asteroidPrefab, map.GetRandomPositionBorderMap(), Quaternion.identity, asteroidParent);
 				yield return new WaitForSeconds(UnityEngine.Random.Range(delayMinBetweenAsteroidSpawn, delayMaxBetweenAsteroidSpawn));
+				Instantiate(asteroidPrefab, map.GetRandomPositionBorderMap(), Quaternion.identity, asteroidParent);
 			}
 		}
 

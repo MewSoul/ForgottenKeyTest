@@ -29,8 +29,7 @@ namespace TAOM.Entities.Ships {
 		}
 
 		private void Update() {
-			if (Vector3.Distance(this.transform.position, player.transform.position) < shootDistancePlayer &&
-				player.gameObject != null)
+			if (player.gameObject != null && Vector3.Distance(this.transform.position, player.transform.position) < shootDistancePlayer)
 				this.transform.DOLookAt(player.transform.position, 0.5f);
 			else if (homeAsteroid.gameObject != null)
 				this.transform.DOLookAt(homeAsteroid.transform.position, 0.5f);
