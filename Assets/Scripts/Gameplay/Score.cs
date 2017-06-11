@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,7 +47,10 @@ namespace TAOM.Gameplay {
 		}
 
 		private void UpdateComboText() {
-			comboText.text = "x" + currentCombo;
+			comboText.text = "Combo x" + currentCombo;
+			Sequence sequence = DOTween.Sequence();
+			sequence.Append(comboText.transform.DOScale(1.3f, 0.1f));
+			sequence.Append(comboText.transform.DOScale(1f, 0.1f));
 		}
 
 		public void SubmitScore(string playerName) {
