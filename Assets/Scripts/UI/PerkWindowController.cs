@@ -60,6 +60,7 @@ namespace TAOM.UI {
 
 		private void HideWindow() {
 			window.SetActive(false);
+			DisableHighlight(currentSlotSelected);
 			perkManager.StartPause();
 			audioManager.PlayClip(hideWindowClip, volumeSource);
 		}
@@ -90,13 +91,28 @@ namespace TAOM.UI {
 			}
 		}
 
-		private void HighlightButton(int index) {
+		public void HighlightButton(int index) {
+			DisableHighlight(currentSlotSelected);
+
+			//Force save slot in case hover done by mouse
+			currentSlotSelected = index;
+
+			if (index < 3) {
+				slots[index].GetComponent<Button>().Select();
+				slots[index].GetComponent<Outline>().enabled = true;
+			} else {
+				closeButton.Select();
+				closeButton.GetComponent<Outline>().enabled = true;
+			}
+			audioManager.PlayClip(hoverButtonClip, volumeSource);
+		}
+
+		public void DisableHighlight(int index) {
 			EventSystem.current.SetSelectedGameObject(null);
 			if (index < 3)
-				slots[index].GetComponent<Button>().Select();
+				slots[index].GetComponent<Outline>().enabled = false;
 			else
-				closeButton.Select();
-			audioManager.PlayClip(hoverButtonClip, volumeSource);
+				closeButton.GetComponent<Outline>().enabled = false;
 		}
 
 		#endregion
