@@ -13,6 +13,7 @@ namespace TAOM.Entities.Ships {
 		[SerializeField] private Slider lifeSlider;
 		[SerializeField] private Text currentLifeText;
 		[SerializeField] private Text maxLifeText;
+		[SerializeField] private Text currentNbCollectibleText;
 
 		private InputManager inputManager;
 		private OverheatingSystem overheatingSystem;
@@ -97,6 +98,10 @@ namespace TAOM.Entities.Ships {
 
 		public void IncreaseNbCollectible() {
 			++currentNbCollectible;
+			currentNbCollectibleText.text = "x" + currentNbCollectible;
+			Sequence sequence = DOTween.Sequence();
+			sequence.Append(currentNbCollectibleText.transform.DOScale(1.3f, 0.1f));
+			sequence.Append(currentNbCollectibleText.transform.DOScale(1f, 0.1f));
 		}
 
 		#endregion
@@ -127,6 +132,7 @@ namespace TAOM.Entities.Ships {
 				return false;
 
 			currentNbCollectible -= cost;
+			currentNbCollectibleText.text = "x" + currentNbCollectible;
 
 			return true;
 		}
