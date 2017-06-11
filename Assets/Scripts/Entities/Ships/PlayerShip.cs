@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using TAOM.Managers;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TAOM.Entities.Ships {
 
@@ -8,6 +9,10 @@ namespace TAOM.Entities.Ships {
 
 		private const float SHAKE_DURATION = 0.1f;
 		private const float SHAKE_POWER = 0.5f;
+
+		[SerializeField] private Slider lifeSlider;
+		[SerializeField] private Text currentLifeText;
+		[SerializeField] private Text maxLifeText;
 
 		private InputManager inputManager;
 		private OverheatingSystem overheatingSystem;
@@ -36,6 +41,8 @@ namespace TAOM.Entities.Ships {
 
 		public override void Damage(float damagePoint) {
 			base.Damage(damagePoint);
+			currentLifeText.text = lifePoints.ToString();
+			lifeSlider.value = lifePoints;
 			game.NotifyPlayerDamaged();
 		}
 

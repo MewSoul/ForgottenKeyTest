@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 418687df222a7ea4a9d7702e53ba8e25
+timeCreated: 1497180493
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Michroma
+  fontNames:
+  - Michroma
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

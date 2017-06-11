@@ -15,6 +15,8 @@ namespace TAOM.Entities.Ships {
 		[SerializeField] private Slider heatSlider;
 		[SerializeField] private Image fillSliderImage;
 		[SerializeField] private Gradient heatGradient;
+		[SerializeField] private Text currentValue;
+		[SerializeField] private Text maxValue;
 
 		[SerializeField] private float maxHeatResistance;
 		[SerializeField] private float heatAddedPerShot;
@@ -36,7 +38,7 @@ namespace TAOM.Entities.Ships {
 		}
 
 		private void Update() {
-			if (Time.time > nextTimeStartCooling)
+			if (Time.time > nextTimeStartCooling && currentHeat > 0)
 				--currentHeat;
 
 			if (currentState.Equals(HeatState.OUT_OF_ORDER) && currentHeat == 0) {
@@ -73,6 +75,7 @@ namespace TAOM.Entities.Ships {
 		private void UpdateSlider() {
 			heatSlider.DOValue(currentHeat, 0.2f);
 			fillSliderImage.color = heatGradient.Evaluate(currentHeat / maxHeatResistance);
+			currentValue.text = currentHeat.ToString();
 		}
 
 		#endregion
@@ -82,6 +85,8 @@ namespace TAOM.Entities.Ships {
 		public void IncreaseMaxHeatResistance() {
 			//Increase max heat resistance by 25%
 			maxHeatResistance *= 1.25f;
+			maxValue.text = maxHeatResistance.ToString();
+			heatSlider.maxValue = maxHeatResistance;
 			Debug.Log("Increase max heat resistance");
 		}
 

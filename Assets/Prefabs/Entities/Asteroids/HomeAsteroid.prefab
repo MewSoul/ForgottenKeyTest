@@ -156,7 +156,7 @@ MonoBehaviour:
   movementSpeed: 0
   dropRateCollectible: 0
   collectiblePrefab: {fileID: 0}
-  explosionPrefab: {fileID: 0}
+  explosionPrefab: {fileID: 100004, guid: 41839206e935eaf499f766e040678062, type: 2}
   explosionClip: {fileID: 8300000, guid: 3dc7455402dfa462b89a4bbd513955e9, type: 3}
   volumeSource: 0.35
   rotationSpeed: 1
