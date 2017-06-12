@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening;
+using System.Collections.Generic;
 using TAOM.Gameplay;
 using TAOM.Managers;
 using UnityEngine;
@@ -54,12 +55,16 @@ namespace TAOM.UI {
 			for (int i = 0; i < 3; i++)
 				slots[i].SetData(chosenPerks[i].title, chosenPerks[i].lore, chosenPerks[i].NextCost(), perkManager.CanPurchasePerk(chosenPerks[i]));
 
+			window.transform.localScale = Vector3.zero;
 			window.SetActive(true);
+			window.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack);
+
 			audioManager.PlayClip(showWindowClip, volumeSource);
 		}
 
 		private void HideWindow() {
-			window.SetActive(false);
+			window.transform.DOScale(0f, 0.5f).SetEase(Ease.InBack).OnComplete(() => window.SetActive(false));
+			//window.SetActive(false);
 			DisableHighlight(currentSlotSelected);
 			perkManager.StartPause();
 			audioManager.PlayClip(hideWindowClip, volumeSource);

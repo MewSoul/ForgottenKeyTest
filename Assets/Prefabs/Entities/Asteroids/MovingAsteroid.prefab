@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e401072fa630447ac2c652b50808c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifePoints: 2
+  lifePoints: 2.5
   movementSpeed: 5
   dropRateCollectible: 100
   collectiblePrefab: {fileID: 1325007190939012, guid: 68067fdefe50c6042bd5dde9f2104765,
