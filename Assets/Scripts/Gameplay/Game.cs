@@ -75,7 +75,6 @@ namespace TAOM.Gameplay {
 		}
 
 		private void CheckPauseBeforeNextWave() {
-			Debug.Log("CHECK WAVE, STATE=" + GameState + " COUNT=" + shipFactory.SpawnedEnemies.Count);
 			if (GameState.Equals(GameState.WAVE_DONE) && shipFactory.SpawnedEnemies.Count == 0) {
 				StopAsteroidFlow();
 				asteroidFactory.ExplodeAllAsteroids();

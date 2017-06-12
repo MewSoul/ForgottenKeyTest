@@ -9,7 +9,7 @@ namespace TAOM.Factories {
 
 	public class ShipFactory : MonoBehaviour {
 
-		[SerializeField] private EnemyShip enemyShipPrefab;
+		[SerializeField] private EnemyShip[] enemyShipPrefabs;
 
 		[SerializeField] private int baseMinEnemyToSpawn;
 		[SerializeField] private int baseMaxEnemyToSpawn;
@@ -22,12 +22,14 @@ namespace TAOM.Factories {
 		private Transform enemyShipParent;
 		public List<EnemyShip> SpawnedEnemies { get; private set; }
 		private PlayerShip playerShip;
+		private int spawnRateEliteEnemies;
 
 		private void Awake() {
 			map = FindObjectOfType<Map>();
 			enemyShipParent = GameObject.FindGameObjectWithTag("_Enemies").transform;
 			SpawnedEnemies = new List<EnemyShip>();
 			playerShip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShip>();
+			spawnRateEliteEnemies = 0;
 		}
 
 		public IEnumerator StartEnemyWave(int waveNb, Action onWaveComplete) {
@@ -38,11 +40,17 @@ namespace TAOM.Factories {
 				SpawnEnemyShip();
 			}
 
+			spawnRateEliteEnemies += 10;
+			if (spawnRateEliteEnemies > 100)
+				spawnRateEliteEnemies = 100;
+
 			onWaveComplete();
 		}
 
 		private void SpawnEnemyShip() {
-			SpawnedEnemies.Add(Instantiate(enemyShipPrefab, map.GetRandomPositionBorderMap(), Quaternion.identity, enemyShipParent));
+			int value = UnityEngine.Random.Range(0, 100);
+			EnemyShip enemyToSpawn = (spawnRateEliteEnemies < value) ? enemyShipPrefabs[0] : enemyShipPrefabs[1];
+			SpawnedEnemies.Add(Instantiate(enemyToSpawn, map.GetRandomPositionBorderMap(), Quaternion.identity, enemyShipParent));
 		}
 
 		public void RemoveDestroyedEnemy(EnemyShip destroyedEnemy) {

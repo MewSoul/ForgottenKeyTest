@@ -2719,8 +2719,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c057bb8e0a22db45bb8e45145a0ccee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyShipPrefab: {fileID: 114003323971863646, guid: e236afd7482f7e54593d1bb12efd7956,
-    type: 2}
+  enemyShipPrefabs:
+  - {fileID: 114003323971863646, guid: e236afd7482f7e54593d1bb12efd7956, type: 2}
+  - {fileID: 114003323971863646, guid: ad755b7317fd75048abc920847e6d6c1, type: 2}
   baseMinEnemyToSpawn: 3
   baseMaxEnemyToSpawn: 5
   nbEnemyMorePerWaveDone: 3
