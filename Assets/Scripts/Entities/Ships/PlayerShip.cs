@@ -20,6 +20,9 @@ namespace TAOM.Entities.Ships {
 		private Vector3 rotation;
 		private int currentNbCollectible;
 
+		private float currentSpeed;
+		private Vector3 previousDirection;
+
 		protected override void Awake() {
 			base.Awake();
 			overheatingSystem = GetComponentInChildren<OverheatingSystem>();
@@ -54,10 +57,17 @@ namespace TAOM.Entities.Ships {
 		#region MOVEMENTS
 
 		private void Move() {
-			if (game.CanDoActions())
+			if (game.CanDoActions() && movement != Vector3.zero) {
 				rb.velocity = movement * movementSpeed;
-			else
-				rb.velocity = Vector3.zero;
+				previousDirection = movement;
+				currentSpeed = movementSpeed;
+			} else if (currentSpeed > 0) {
+				//Smooth way to stop down the spaceship rather than stopping immediately
+				currentSpeed -= 0.25f;
+				if (currentSpeed < 0)
+					currentSpeed = 0;
+				rb.velocity = previousDirection * currentSpeed;
+			}
 		}
 
 		private void Rotate() {
