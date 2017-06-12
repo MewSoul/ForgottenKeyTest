@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections.Generic;
 using TAOM.Gameplay;
+using TAOM.Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -22,19 +23,37 @@ namespace TAOM.UI {
 		[SerializeField] private InputField playerNameInput;
 		[SerializeField] private Button submitButton;
 		[SerializeField] private Text leaderboardText;
-		[SerializeField] private GameObject replayButton;
+		[SerializeField] private Button replayButton;
+		[SerializeField] private AudioClip hoverButtonClip;
+		[SerializeField] private AudioClip buttonCloseClip;
+		[SerializeField] private float volumeSource;
 
+		private InputManager inputManager;
+		private AudioManager audioManager;
 		private Score score;
 		private WindowState currentState;
 
 		private void Awake() {
+			inputManager = FindObjectOfType<InputManager>();
+			audioManager = FindObjectOfType<AudioManager>();
 			score = FindObjectOfType<Score>();
 			currentState = WindowState.SUBMIT_SCORE;
 		}
 
 		private void Update() {
+			if (window.activeSelf)
+				UpdateConfirm();
 			if (currentState.Equals(WindowState.LOADING_SCORES))
 				DisplayLeaderboard();
+		}
+
+		private void UpdateConfirm() {
+			if (inputManager.InputConfirm()) {
+				if (currentState.Equals(WindowState.SUBMIT_SCORE))
+					OnClickSubmitButton();
+				else
+					OnClickReplayButton();
+			}
 		}
 
 		#region DISPLAYS
@@ -70,7 +89,22 @@ namespace TAOM.UI {
 		}
 
 		private void DisplayReplayButton() {
-			replayButton.SetActive(true);
+			replayButton.gameObject.SetActive(true);
+		}
+
+		public void HighlightButton() {
+			if (currentState.Equals(WindowState.SUBMIT_SCORE))
+				submitButton.GetComponent<Outline>().enabled = true;
+			else
+				replayButton.GetComponent<Outline>().enabled = true;
+			audioManager.PlayClip(hoverButtonClip, volumeSource);
+		}
+
+		public void DisableHighlight() {
+			if (currentState.Equals(WindowState.SUBMIT_SCORE))
+				submitButton.GetComponent<Outline>().enabled = false;
+			else
+				replayButton.GetComponent<Outline>().enabled = false;
 		}
 
 		#endregion
@@ -80,6 +114,7 @@ namespace TAOM.UI {
 		public void OnClickSubmitButton() {
 			if (playerNameInput.text.Length == 0)
 				return;
+			audioManager.PlayClip(buttonCloseClip, volumeSource);
 			score.SubmitScore(playerNameInput.text);
 			currentState = WindowState.LOADING_SCORES;
 			HideSubmitComponents();
@@ -88,6 +123,7 @@ namespace TAOM.UI {
 		}
 
 		public void OnClickReplayButton() {
+			audioManager.PlayClip(buttonCloseClip, volumeSource);
 			SceneManager.LoadScene(0);
 		}
 

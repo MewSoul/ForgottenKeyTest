@@ -40,8 +40,8 @@ namespace TAOM.Entities.Ships {
 		}
 
 		private bool IsCloseToTargetsToShoot() {
-			return ((player.gameObject != null && Vector3.Distance(this.transform.position, player.transform.position) < shootDistancePlayer) ||
-				(homeAsteroid.gameObject != null && Vector3.Distance(this.transform.position, homeAsteroid.transform.position) < shootDistanceHomeAsteroid));
+			return ((player != null && Vector3.Distance(this.transform.position, player.transform.position) < shootDistancePlayer) ||
+				(homeAsteroid != null && Vector3.Distance(this.transform.position, homeAsteroid.transform.position) < shootDistanceHomeAsteroid));
 		}
 
 		public override void Die() {
