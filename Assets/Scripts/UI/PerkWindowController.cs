@@ -64,7 +64,6 @@ namespace TAOM.UI {
 
 		private void HideWindow() {
 			window.transform.DOScale(0f, 0.5f).SetEase(Ease.InBack).OnComplete(() => window.SetActive(false));
-			//window.SetActive(false);
 			DisableHighlight(currentSlotSelected);
 			perkManager.StartPause();
 			audioManager.PlayClip(hideWindowClip, volumeSource);

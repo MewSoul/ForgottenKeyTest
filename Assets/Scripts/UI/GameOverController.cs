@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening;
+using System.Collections.Generic;
 using TAOM.Gameplay;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -40,7 +41,9 @@ namespace TAOM.UI {
 
 		public void DisplayGameOverWindow() {
 			scoreText.text = score.CurrentScore.ToString();
+			window.transform.localScale = Vector3.zero;
 			window.SetActive(true);
+			window.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack);
 		}
 
 		public void HideSubmitComponents() {
