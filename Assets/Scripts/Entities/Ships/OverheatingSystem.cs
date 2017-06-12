@@ -41,6 +41,9 @@ namespace TAOM.Entities.Ships {
 			if (Time.time > nextTimeStartCooling && currentHeat > 0)
 				--currentHeat;
 
+			if (currentHeat < 0)
+				currentHeat = 0;
+
 			if (currentState.Equals(HeatState.OUT_OF_ORDER) && currentHeat == 0) {
 				currentState = HeatState.IN_ORDER;
 				audioManager.PlayClip(stateOKClip, volumeSource);

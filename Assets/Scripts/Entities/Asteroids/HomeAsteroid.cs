@@ -38,7 +38,7 @@ namespace TAOM.Entities.Asteroids {
 
 		public void AddLife() {
 			//Add 2 life points
-			lifePoints = Mathf.Clamp(lifePoints + 3, lifePoints + 3, maxLifePoints);
+			lifePoints = Mathf.Clamp(lifePoints + 2, lifePoints + 2, maxLifePoints);
 			currentLifeText.text = lifePoints.ToString();
 			lifeSlider.value = lifePoints;
 			Debug.Log("Add 2 life points");

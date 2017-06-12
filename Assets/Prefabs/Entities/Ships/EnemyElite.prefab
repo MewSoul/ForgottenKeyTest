@@ -224,12 +224,12 @@ MonoBehaviour:
   projectilePrefab: {fileID: 114583862187124130, guid: a048437267695824baa516215e5c058e,
     type: 2}
   projectileSpawn: {fileID: 4283278013744240}
-  projectileDamage: 1.25
+  projectileDamage: 1
   projectileSpeed: 30
   shootDelay: 0.2
   shootClip: {fileID: 8300000, guid: ad5a33718db56ec4a8d83f8183d3e558, type: 3}
-  shootDistancePlayer: 20
-  shootDistanceHomeAsteroid: 25
+  shootDistancePlayer: 17
+  shootDistanceHomeAsteroid: 22
   delayBetweenShots: 1.75
 --- !u!198 &198154637080210330
 ParticleSystem:
