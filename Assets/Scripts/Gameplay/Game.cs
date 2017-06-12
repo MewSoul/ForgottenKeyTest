@@ -145,7 +145,7 @@ namespace TAOM.Gameplay {
 
 			GameState = GameState.GAME_OVER;
 			StopAllCoroutines();
-
+			StopAsteroidFlow();
 			asteroidFactory.ExplodeAllAsteroids(true);
 			shipFactory.DestroyAllShips();
 
