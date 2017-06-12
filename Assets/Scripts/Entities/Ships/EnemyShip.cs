@@ -29,9 +29,9 @@ namespace TAOM.Entities.Ships {
 		}
 
 		private void Update() {
-			if (player.gameObject != null && Vector3.Distance(this.transform.position, player.transform.position) < shootDistancePlayer)
+			if (player != null && Vector3.Distance(this.transform.position, player.transform.position) < shootDistancePlayer)
 				this.transform.DOLookAt(player.transform.position, 0.5f);
-			else if (homeAsteroid.gameObject != null)
+			else if (homeAsteroid != null)
 				this.transform.DOLookAt(homeAsteroid.transform.position, 0.5f);
 
 			if (Time.time > timeNextShot && IsCloseToTargetsToShoot() && Fire()) {

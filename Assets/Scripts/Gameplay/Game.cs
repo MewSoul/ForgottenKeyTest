@@ -8,6 +8,7 @@ using UnityEngine;
 namespace TAOM.Gameplay {
 
 	public enum GameState {
+		DISCLAIMER,
 		WAVE_IN_PROGRESS,
 		WAVE_DONE,
 		PERK,
@@ -28,6 +29,7 @@ namespace TAOM.Gameplay {
 		private Score score;
 		private PerkManager perkManager;
 		private GameOverController gameOverController;
+		private DisclaimerController disclaimerController;
 
 		public GameState GameState { get; private set; }
 		private int currentWave;
@@ -36,20 +38,24 @@ namespace TAOM.Gameplay {
 		private void Awake() {
 			shipFactory = FindObjectOfType<ShipFactory>();
 			asteroidFactory = FindObjectOfType<AsteroidFactory>();
+			collectibleMagnet = FindObjectOfType<CollectibleMagnet>();
 			score = FindObjectOfType<Score>();
 			perkManager = FindObjectOfType<PerkManager>();
 			gameOverController = FindObjectOfType<GameOverController>();
-			collectibleMagnet = FindObjectOfType<CollectibleMagnet>();
+			disclaimerController = FindObjectOfType<DisclaimerController>();
 
-			GameState = GameState.PAUSED;
+			GameState = GameState.DISCLAIMER;
 			currentWave = 0;
 		}
 
 		private void Start() {
-			StartGame();
+			if (!PlayerPrefs.HasKey("Disclaimer"))
+				disclaimerController.ShowWindow();
+			else
+				StartGame();
 		}
 
-		private void StartGame() {
+		public void StartGame() {
 			StartEnemyWave();
 			StartAsteroidFlow();
 		}
@@ -122,7 +128,9 @@ namespace TAOM.Gameplay {
 		#endregion
 
 		public bool CanDoActions() {
-			return !GameState.Equals(GameState.PERK) && !GameState.Equals(GameState.GAME_OVER);
+			return !GameState.Equals(GameState.PERK) &&
+				!GameState.Equals(GameState.GAME_OVER) &&
+				!GameState.Equals(GameState.DISCLAIMER);
 		}
 
 		public void NotifyPlayerDamaged() {
