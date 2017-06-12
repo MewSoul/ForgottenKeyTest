@@ -14,6 +14,7 @@ namespace TAOM.Entities {
 		[SerializeField] private AudioClip explosionClip;
 		[SerializeField] protected float volumeSource;
 
+		protected InputManager inputManager;
 		protected AudioManager audioManager;
 		private Renderer meshRenderer;
 		protected Rigidbody rb;
@@ -21,6 +22,7 @@ namespace TAOM.Entities {
 		private Transform explosionParent;
 
 		protected virtual void Awake() {
+			inputManager = FindObjectOfType<InputManager>();
 			audioManager = FindObjectOfType<AudioManager>();
 			meshRenderer = GetComponentInChildren<Renderer>();
 			rb = GetComponent<Rigidbody>();
@@ -31,9 +33,10 @@ namespace TAOM.Entities {
 		public virtual void Damage(float damagePoint) {
 			lifePoints -= damagePoint;
 
-			if (lifePoints <= 0)
+			if (lifePoints <= 0) {
+				lifePoints = 0;
 				Die();
-			else
+			} else
 				StartCoroutine(FlashModel());
 		}
 

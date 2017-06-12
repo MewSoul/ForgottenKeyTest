@@ -48,6 +48,7 @@ namespace TAOM.Entities.Ships {
 			base.Die();
 			DOTween.Kill(this.transform);
 			game.NotifyEnemyDeath(this);
+			inputManager.VibrateController(0.2f, 0.2f, 0.2f);
 		}
 
 	}

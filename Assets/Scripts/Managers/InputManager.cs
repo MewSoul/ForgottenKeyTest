@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using XInputDotNetPure;
 
 namespace TAOM.Managers {
 
@@ -100,13 +101,13 @@ namespace TAOM.Managers {
 
 		public void VibrateController(float powerLeft, float powerRight, float duration) {
 			StopCoroutine("StopVibration");
-			//GamePad.SetVibration(0, powerLeft, powerRight);
+			GamePad.SetVibration(0, powerLeft, powerRight);
 			StartCoroutine(StopVibration(duration));
 		}
 
 		private IEnumerator StopVibration(float timeToWait) {
 			yield return new WaitForSeconds(timeToWait);
-			//GamePad.SetVibration(0, 0, 0);
+			GamePad.SetVibration(0, 0, 0);
 		}
 
 		#endregion

@@ -15,7 +15,6 @@ namespace TAOM.Entities.Ships {
 		[SerializeField] private Text maxLifeText;
 		[SerializeField] private Text currentNbCollectibleText;
 
-		private InputManager inputManager;
 		private OverheatingSystem overheatingSystem;
 		private Vector3 movement;
 		private Vector3 rotation;
@@ -23,7 +22,6 @@ namespace TAOM.Entities.Ships {
 
 		protected override void Awake() {
 			base.Awake();
-			inputManager = FindObjectOfType<InputManager>();
 			overheatingSystem = GetComponentInChildren<OverheatingSystem>();
 			currentNbCollectible = 0;
 		}
@@ -45,6 +43,7 @@ namespace TAOM.Entities.Ships {
 			currentLifeText.text = lifePoints.ToString();
 			lifeSlider.value = lifePoints;
 			game.NotifyPlayerDamaged();
+			inputManager.VibrateController(0.3f, 0.3f, 0.2f);
 		}
 
 		public override void Die() {
@@ -87,7 +86,6 @@ namespace TAOM.Entities.Ships {
 			if (inputManager.InputFire() && overheatingSystem.IsInOrder() && Fire()) {
 				overheatingSystem.Heat();
 				Camera.main.DOShakePosition(SHAKE_DURATION, SHAKE_POWER * projectileScale);
-				inputManager.VibrateController(0.2f, 0.2f, 0.2f);
 			}
 
 		}

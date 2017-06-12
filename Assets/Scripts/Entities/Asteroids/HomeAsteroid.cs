@@ -20,11 +20,13 @@ namespace TAOM.Entities.Asteroids {
 		public override void Damage(float damagePoint) {
 			base.Damage(damagePoint);
 			UpdateUIData();
+			inputManager.VibrateController(0.3f, 0.3f, 0.2f);
 		}
 
 		public override void Die() {
 			base.Die();
 			game.GameOver();
+			inputManager.VibrateController(0.6f, 0.6f, 1f);
 		}
 
 		private void UpdateUIData() {
