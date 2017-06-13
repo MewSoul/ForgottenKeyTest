@@ -7,6 +7,7 @@ namespace TAOM.Entities.Ships {
 
 	public class PlayerShip : AShip {
 
+		private const float DELAY_SMOOTH_STOP = 0.5f;
 		private const float SHAKE_DURATION = 0.1f;
 		private const float SHAKE_POWER = 0.5f;
 
@@ -63,7 +64,7 @@ namespace TAOM.Entities.Ships {
 				currentSpeed = movementSpeed;
 			} else if (currentSpeed > 0) {
 				//Smooth way to stop down the spaceship rather than stopping immediately
-				currentSpeed -= 0.25f;
+				currentSpeed -= Time.deltaTime * movementSpeed / DELAY_SMOOTH_STOP;
 				if (currentSpeed < 0)
 					currentSpeed = 0;
 				rb.velocity = previousDirection * currentSpeed;
@@ -119,25 +120,20 @@ namespace TAOM.Entities.Ships {
 		public void IncreaseFiringRate() {
 			//Increase firing rate  by 25%
 			shootDelay *= 0.75f;
-			Debug.Log("Increase firing rate!");
 		}
 
 		public void IncreaseProjectileDamage() {
 			//Increase damage by 25%
 			projectileDamage *= 1.25f;
 			projectileScale *= 1.33f;
-			Debug.Log("Increase projectile damage!");
 		}
 
 		public void IncreaseMovementSpeed() {
 			//Increase speed by 10%
 			movementSpeed *= 1.1f;
-			Debug.Log("Increase movement speed!");
 		}
 
 		public bool PurchasePerk(int cost) {
-			Debug.Log("CURRENT NB=" + currentNbCollectible);
-			Debug.Log("COST=" + cost);
 			currentNbCollectible -= cost;
 			currentNbCollectibleText.text = "x" + currentNbCollectible;
 			return true;

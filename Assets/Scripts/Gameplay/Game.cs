@@ -63,13 +63,11 @@ namespace TAOM.Gameplay {
 		#region ENEMY WAVES
 
 		private void StartEnemyWave() {
-			Debug.Log("WAVE STARTED");
 			GameState = GameState.WAVE_IN_PROGRESS;
 			StartCoroutine(shipFactory.StartEnemyWave(currentWave, () => OnWaveComplete()));
 		}
 
 		public void OnWaveComplete() {
-			Debug.Log("WAVE DONE");
 			++currentWave;
 			GameState = GameState.WAVE_DONE;
 		}
@@ -97,7 +95,6 @@ namespace TAOM.Gameplay {
 		#region BREAKS
 
 		private IEnumerator DisplayPerkWindow() {
-			Debug.Log("DISPLAY PERK WINDOW");
 			GameState = GameState.PERK;
 			score.WaveCompleted();
 			yield return new WaitForSeconds(delayBetweenPerkWindow);
@@ -105,7 +102,6 @@ namespace TAOM.Gameplay {
 		}
 
 		public IEnumerator StartPause() {
-			Debug.Log("START PAUSE");
 			GameState = GameState.PAUSED;
 			yield return new WaitForSeconds(delayBetweenWaves);
 			StartEnemyWave();
@@ -139,8 +135,6 @@ namespace TAOM.Gameplay {
 		public void GameOver() {
 			if (GameState.Equals(GameState.GAME_OVER))
 				return;
-
-			Debug.Log("GAME OVER");
 
 			GameState = GameState.GAME_OVER;
 			StopAllCoroutines();

@@ -90,13 +90,11 @@ namespace TAOM.Entities.Ships {
 			maxHeatResistance *= 1.25f;
 			maxValue.text = maxHeatResistance.ToString();
 			heatSlider.maxValue = maxHeatResistance;
-			Debug.Log("Increase max heat resistance");
 		}
 
 		public void DecreaseDelayCooldown() {
 			//Decrease delay cooldown by 25%
 			cooldownDelay *= 0.75f;
-			Debug.Log("Decrease delay cooldown");
 		}
 
 		#endregion
